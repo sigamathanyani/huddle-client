@@ -1,0 +1,65 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 500 580">
+
+  <!--
+    Huddle H-mark analysis:
+    The H has a distinctive feature: diagonal "slash" cuts through the crossbar area
+    creating a dynamic, sporty parallelogram gap between the two pillars.
+    
+    Left pillar: roughly x=90-160, full height y=55 to y=415
+    Right pillar: roughly x=210-280, starts lower y=135 to y=415
+    Crossbar: diagonal strip connecting pillars, going from upper-left to lower-right
+    The NEGATIVE SPACE (gap) in the crossbar is a diagonal parallelogram
+    
+    The key visual: both pillar inner edges are SLANTED at the crossbar
+    making it look like a forward-leaning slash cuts through the middle
+  -->
+
+  <!-- 
+    Draw as one compound/union shape using overlapping polygons
+    
+    Left vertical bar (full):
+      Outer-left edge: straight vertical x=90
+      Top: y=55 flat
+      Inner-right edge: straight vertical x=160
+      Bottom: y=415 flat
+    
+    Right vertical bar (shifted down):
+      Outer-right edge: straight vertical x=280
+      Top: y=130 flat  
+      Inner-left edge: straight vertical x=210
+      Bottom: y=415 flat
+    
+    Crossbar (diagonal parallelogram):
+      Connects x=160,y=195 to x=210,y=165 at top
+      Connects x=160,y=245 to x=210,y=215 at bottom
+    
+    The gap (negative space) is a diagonal parallelogram between y≈195-245 on left, y≈165-215 on right
+  -->
+
+  <!-- Left pillar top (above crossbar gap) -->
+  <polygon points="90,55 160,55 160,200 90,240" fill="#111"/>
+  
+  <!-- Left pillar bottom (below crossbar gap) -->  
+  <polygon points="90,280 160,245 160,415 90,415" fill="#111"/>
+  
+  <!-- Crossbar bridge -->
+  <polygon points="160,200 210,165 210,215 160,245" fill="#111"/>
+  
+  <!-- Right pillar top (above crossbar gap) -->
+  <polygon points="210,130 280,130 280,180 210,215" fill="#111"/>
+  
+  <!-- Right pillar bottom (below crossbar gap) -->
+  <polygon points="210,250 280,215 280,415 210,415" fill="#111"/>
+
+  <!-- HUDDLE wordmark - bold condensed -->
+  <text 
+    x="185" 
+    y="500" 
+    font-family="'Arial Black', 'Franklin Gothic Heavy', 'Impact', sans-serif"
+    font-size="58"
+    font-weight="900"
+    text-anchor="middle"
+    letter-spacing="5"
+    fill="#111">HUDDLE</text>
+
+</svg>
