@@ -7,20 +7,21 @@ import { BORDER_SIZE, FIELD_HEIGHT, FONT_SIZE, ICON_SIZE, RADIUS } from '@/const
 import { GAP, SPACING } from '@/constants/spacing'
 import { GENDER } from '@/enums/generalEnums'
 import FontAwesome5 from '@expo/vector-icons/FontAwesome5';
+import { completeUserProfile } from '@/services/authService'
+import { Link } from 'expo-router'
 
 // const HuddleLogo = HuddleLogoRaw as React.FC<SvgProps>;
 
 export default function CompleteProfile() {
 
-    const [firstName, setFistName] = useState<string>('')
-    const [lastName, setLastName] = useState<string>('')
+    const [fullName, setFullName] = useState<string>('')
     const [phoneNumber, setPhoneNumber] = useState<string>('')
     const [gender, setGender] = useState<GENDER>(GENDER.NOT_APPLICABLE)
     const [avatar, setAvatar] = useState<string>('') // NEED BACKEND FIRST
 
     const handleOnboardingUser = async () => {
-        // console.log({ username, email, password })
-        // await registerUser({ username, email, password })
+        console.log({ fullName, phoneNumber, gender })
+        await completeUserProfile({ fullName, phoneNumber, gender })
     }
 
 
@@ -58,7 +59,7 @@ export default function CompleteProfile() {
                                         <FontAwesome5 name="pencil-alt" size={ICON_SIZE.small} color={COLORS.white} />
                                     </View>
 
-                                    
+
                                 </View>
                             </View>
                             <View style={styles.inputContainer} >
@@ -66,18 +67,10 @@ export default function CompleteProfile() {
                                     style={styles.inputFields}
                                     placeholder="Full name"
                                     autoCapitalize="none"
-                                    value={firstName}
-                                    onChangeText={setFistName}
+                                    value={fullName}
+                                    onChangeText={setFullName}
                                     placeholderTextColor={COLORS.lightGray}
                                 />
-                                {/* <TextInput
-                                    style={styles.inputFields}
-                                    placeholder="Last name"
-                                    autoCapitalize="none"
-                                    value={lastName}
-                                    onChangeText={setLastName}
-                                    placeholderTextColor={COLORS.lightGray}
-                                /> */}
                                 <TextInput
                                     style={styles.inputFields}
                                     placeholder="Phone number"
@@ -85,14 +78,14 @@ export default function CompleteProfile() {
                                     value={phoneNumber}
                                     onChangeText={setPhoneNumber}
                                     placeholderTextColor={COLORS.lightGray}
-                                    
+
                                 />
                                 <TextInput
                                     style={styles.inputFields}
                                     placeholder="Select Gender"
                                     autoCapitalize="none"
-                                    value={lastName}
-                                    onChangeText={setLastName}
+                                    // value={''}
+                                    // onChangeText={()=>'gender'}
                                     placeholderTextColor={COLORS.lightGray}
                                 />
                             </View>
@@ -100,6 +93,13 @@ export default function CompleteProfile() {
                                 <TouchableOpacity style={styles.button} onPress={handleOnboardingUser}>
                                     <Text style={styles.buttonText}>
                                         Complete
+                                    </Text>
+                                </TouchableOpacity>
+                                <TouchableOpacity style={styles.loginLinkButton}  >
+                                    <Text style={styles.skipCompleteButtonText}>
+                                        <Link href='/(auth)/login' replace>
+                                            Do this later
+                                        </Link>
                                     </Text>
                                 </TouchableOpacity>
                             </View>
@@ -191,6 +191,7 @@ const styles = StyleSheet.create({
 
     buttonContainter: {
         marginBottom: SPACING.large,
+        justifyContent: 'center',
     },
 
     button: {
@@ -221,11 +222,18 @@ const styles = StyleSheet.create({
 
     loginLinkButton: {
         paddingVertical: SPACING.xtraSmall,
+        alignItems: 'center'
     },
 
     loginLinkButtonText: {
         fontSize: FONT_SIZE.medium,
         fontWeight: '600',
         color: COLORS.primary,
+    },
+    skipCompleteButtonText: {
+        fontSize: FONT_SIZE.medium,
+        fontWeight: '600',
+        color: COLORS.generalText,
+        marginTop: SPACING.medium
     },
 });

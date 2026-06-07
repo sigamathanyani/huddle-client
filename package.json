@@ -9,7 +9,7 @@
     "ios": "expo start --ios",
     "web": "expo start --web",
     "lint": "expo lint",
-    "expo:wsl": "REACT_NATIVE_PACKAGER_HOSTNAME=192.168.101.3 npx expo start --lan"
+    "expo:wsl": "REACT_NATIVE_PACKAGER_HOSTNAME=192.168.101.4 npx expo start --lan"
   },
   "dependencies": {
     "@expo/vector-icons": "^15.0.3",
@@ -24,6 +24,7 @@
     "expo-linear-gradient": "~15.0.8",
     "expo-linking": "~8.0.12",
     "expo-router": "~6.0.23",
+    "expo-secure-store": "~15.0.8",
     "expo-splash-screen": "~31.0.13",
     "expo-status-bar": "~3.0.9",
     "expo-symbols": "~1.0.8",
