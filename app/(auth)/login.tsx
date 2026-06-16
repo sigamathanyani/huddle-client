@@ -3,23 +3,24 @@ import { KeyboardAvoidingView, Platform, ScrollView, StyleSheet, Text, TextInput
 import { SafeAreaView } from 'react-native-safe-area-context'
 import Svg, { Path } from 'react-native-svg'
 import { LinearGradient } from 'expo-linear-gradient'
-import { registerUser } from '@/services/authService'
 import { COLORS } from '@/constants/colors'
 import { BORDER_SIZE, FIELD_HEIGHT, FONT_SIZE, RADIUS } from '@/constants/typography'
 import { GAP, SPACING } from '@/constants/spacing'
 import { Link } from 'expo-router'
+import { useAuth } from '@/context/AuthContext'
 
 // const HuddleLogo = HuddleLogoRaw as React.FC<SvgProps>;
 
-export default function Register() {
+export default function Login() {
+
+    const { loginU } = useAuth()
 
     const [username, setUsername] = useState<string>('')
     const [email, setEmail] = useState<string>('')
     const [password, setPassword] = useState<string>('')
 
     const handleLoginUser = async () => {
-        // console.log({ username, email, password })
-        // await registerUser({ username, email, password })
+        loginU({ username, email, password })
     }
 
 
@@ -55,11 +56,20 @@ export default function Register() {
                                 {/* THIS INPUT SHOULD HANDLE BOTH username AND email */}
                                 <TextInput
                                     style={styles.inputFields}
-                                    placeholder="email@email.com OR @huddle-handle-username"
+                                    placeholder="email@email.com"
                                     keyboardType="email-address"
                                     autoCapitalize="none"
                                     value={email}
                                     onChangeText={setEmail}
+                                    placeholderTextColor={COLORS.lightGray}
+                                />
+                                <TextInput
+                                    style={styles.inputFields}
+                                    placeholder="@huddle-handle-username"
+                                    // keyboardType="email-address"
+                                    autoCapitalize="none"
+                                    value={username}
+                                    onChangeText={setUsername}
                                     placeholderTextColor={COLORS.lightGray}
                                 />
 

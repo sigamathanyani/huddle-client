@@ -10,7 +10,7 @@ export const authAPI = {
             body: JSON.stringify({
                 email: data.email,
                 username: data.username,
-                hashed_password: data.password
+                plain_password: data.password
             })
         })
     },
@@ -22,7 +22,7 @@ export const authAPI = {
             body: JSON.stringify({
                 email: data.email,
                 username: data.username,
-                hashed_password: data.password
+                plain_password: data.password
             })
         })
     },

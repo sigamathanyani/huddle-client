@@ -3,25 +3,27 @@ import { ActivityIndicator, KeyboardAvoidingView, Platform, ScrollView, StyleShe
 import { SafeAreaView } from 'react-native-safe-area-context'
 import Svg, { Path } from 'react-native-svg'
 import { LinearGradient } from 'expo-linear-gradient'
-import { registerUser } from '@/services/authService'
 import { GAP, SPACING } from '@/constants/spacing'
 import { BORDER_SIZE, FIELD_HEIGHT, FONT_SIZE, RADIUS } from '@/constants/typography'
 import { COLORS } from '@/constants/colors'
 import { Link } from 'expo-router'
+import { useAuth } from '@/context/AuthContext'
 
 // const HuddleLogo = HuddleLogoRaw as React.FC<SvgProps>;
 
 export default function Register() {
+
+    const { registerU } = useAuth()
 
     const [username, setUsername] = useState<string>('')
     const [email, setEmail] = useState<string>('')
     const [password, setPassword] = useState<string>('')
     const [isLoading, setIsLoading] = useState<boolean>(false)
 
-    const handleRegisteringUser = async () => {
+    const handleRegisteringUser = () => {
         try {
             setIsLoading(true)
-            await registerUser({ username, email, password })
+            registerU({ username, email, password })
         } catch (error) {
             console.error(`Something went wrong${error}`)
         } finally {
@@ -89,10 +91,10 @@ export default function Register() {
                             </View>
                             <View style={styles.buttonContainter} >
                                 <TouchableOpacity style={styles.button} onPress={handleRegisteringUser}>
-                                    {isLoading ? <ActivityIndicator size={'small'} color={COLORS.white}/> :
-                                    <Text style={styles.buttonText}>
-                                        Register
-                                    </Text>}
+                                    {isLoading ? <ActivityIndicator size={'small'} color={COLORS.white} /> :
+                                        <Text style={styles.buttonText}>
+                                            Register
+                                        </Text>}
                                 </TouchableOpacity>
                             </View>
                             <View style={styles.loginTextContainter} >

@@ -1,7 +1,7 @@
-const BASE_ULR = 'http://192.168.101.3:8000';
+const BASE_URL = 'http://192.168.101.4:8000';
 
 export default async function apiRequest(endpoint: string, options: RequestInit) {
-    const response = await fetch(`${BASE_ULR}${endpoint}`,options);
+    const response = await fetch(`${BASE_URL}${endpoint}`,options);
     if(!response.ok){
         const error = await response.json();
         throw new Error(error.detail);

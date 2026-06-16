@@ -2,7 +2,7 @@ import { authAPI } from "@/api/authApi";
 import { LoginRequest, LoginResponse, UserComleteProfile, UserRegister } from "@/types/auth";
 
 export const registerUser = async (data: UserRegister) => {
-    await authAPI.register(data)
+    return await authAPI.register(data)
 }
 
 export const loginUser = async (data: LoginRequest): Promise<LoginResponse> => {

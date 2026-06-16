@@ -1,14 +1,14 @@
 import { deleteToken, getToken, saveToken } from "@/storage/tokenStorage";
 import { User } from "@/types/user";
 import { createContext, useContext, useEffect, useState } from "react";
-import { userAPI } from "@/api/userApi";
-import { LoginRequest } from "@/types/auth";
-import { loginUser } from "@/services/authService";
+import { LoginRequest, RegisterRequest } from "@/types/auth";
+import { loginUser, registerUser } from "@/services/authService";
 import { me } from "@/services/userService";
 
 type AuthContextType = {
     currentUser: User | null
-    login: (data: LoginRequest) => void
+    loginU: (data: LoginRequest) => void
+    registerU: (data: RegisterRequest) => void
     logout: () => void
     isAuthLoading: boolean
 }
@@ -28,16 +28,14 @@ export function AuthProvider(props: Props) {
     }, [])
 
     const authInit = async () => {
-        // Gett the token
+        // Get the token
         try {
             setIsAuthLoading(true)
             const accessToken = await getToken();
-
             if (!accessToken) {
                 setCurrentUser(null);
                 return;
             }
-
             const user = await me(accessToken)
             setCurrentUser(user)
 
@@ -47,8 +45,6 @@ export function AuthProvider(props: Props) {
             console.error(error);
         } finally {
             setIsAuthLoading(false);
-            setCurrentUser(null);
-
         }
     }
 
@@ -57,22 +53,45 @@ export function AuthProvider(props: Props) {
         setCurrentUser(null);
     }
 
-    const login = async (data: LoginRequest) => {
-        const u = await loginUser(data);
-        await saveToken(u.access_token);
+    const loginU = async (data: LoginRequest) => {
+        try {
+            setIsAuthLoading(true)
+            const u = await loginUser(data);
+            await saveToken(u.access_token);
+            const user = await me(u.access_token)
+            setCurrentUser(user)
+        } catch (error) {
+            console.error(error);
+        } finally {
+            setIsAuthLoading(false)
+        }
+    }
+
+    const registerU = async (data: RegisterRequest) => {
+        try {
+            setIsAuthLoading(true)
+            const u = await registerUser(data);
+            await saveToken(u.access_token);
+            const user = await me(u.access_token)
+            setCurrentUser(user)
+        } catch (error) {
+            console.error(error);
+        } finally {
+            setIsAuthLoading(false)
+        }
     }
 
     return (
-        <AuthContext.Provider value={{ isAuthLoading, login, logout, currentUser }}>
+        <AuthContext.Provider value={{ isAuthLoading, loginU, registerU, logout, currentUser }}>
             {props.children}
         </AuthContext.Provider>
     )
 }
 
-export const useAuth = async () => {
+export const useAuth = () => {
     const ctx = useContext(AuthContext)
-    if(!ctx){
-        throw new Error("Use this hook in a child of this hook");
+    if (!ctx) {
+        throw new Error("useAuth must be used within an AuthProvider");
     }
     return ctx
 }
